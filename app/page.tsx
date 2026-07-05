@@ -126,7 +126,7 @@ export default function Home() {
         {!nameSubmitted ? (
           <section className="challenge-card">
             <p className="eyebrow">PRIVATE RELEASE PROTOCOL</p>
-            <h1>Iniciar sesión</h1>
+            <h1>HOLA</h1>
 
             <p className="prompt">
               Para comenzar la misión, introduce tu nombre.
