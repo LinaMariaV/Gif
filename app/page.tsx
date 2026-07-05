@@ -10,7 +10,6 @@ type Challenge = {
   answer: string[];
 };
 
-const boyfriendName = "SERGIO";
 const finalLocation = "Abre la puerta de entrada de la casa";
 
 const challenges: Challenge[] = [
@@ -39,16 +38,12 @@ const challenges: Challenge[] = [
     answer: ["production", "produccion", "producción"],
   },
   {
-    
-  
-  level: "BOSS FIGHT",
-  title: "Version Gate",
-  prompt:
-    "Encontraste el historial, descifraste la release y llegaste a producción. Pero la compuerta final no se abre con una frase: necesita el nombre exacto del punto de control que marca una versión lista para salir. ¿Qué palabra buscas?",
-  hint: "Pista: en Git se usa para marcar versiones como v1.0.0, v2.1.0, etc.",
-  answer: ["tag", "git tag"],
-
-
+    level: "BOSS FIGHT",
+    title: "Version Gate",
+    prompt:
+      "Encontraste el historial, descifraste la release y llegaste a producción. Pero la compuerta final no se abre con una frase: necesita el nombre exacto del punto de control que marca una versión lista para salir. ¿Qué palabra buscas?",
+    hint: "Pista: en Git se usa para marcar versiones como v1.0.0, v2.1.0, etc.",
+    answer: ["tag", "git tag"],
   },
 ];
 
@@ -67,11 +62,26 @@ export default function Home() {
   const [showHint, setShowHint] = useState(false);
   const [accessGranted, setAccessGranted] = useState(false);
 
+  const [playerName, setPlayerName] = useState("");
+  const [nameSubmitted, setNameSubmitted] = useState(false);
+
   const progress = useMemo(() => {
     return Math.round((step / challenges.length) * 100);
   }, [step]);
 
   const current = challenges[step];
+
+  function handleNameSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!playerName.trim()) {
+      setError("Debes ingresar tu nombre para iniciar la sesión.");
+      return;
+    }
+
+    setError("");
+    setNameSubmitted(true);
+  }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -104,6 +114,8 @@ export default function Home() {
     setError("");
     setShowHint(false);
     setAccessGranted(false);
+    setPlayerName("");
+    setNameSubmitted(false);
   }
 
   return (
@@ -111,7 +123,28 @@ export default function Home() {
       <div className="grid-bg" />
 
       <section className="portal-card">
-        {!accessGranted ? (
+        {!nameSubmitted ? (
+          <section className="challenge-card">
+            <p className="eyebrow">PRIVATE RELEASE PROTOCOL</p>
+            <h1>Iniciar sesión</h1>
+
+            <p className="prompt">
+              Para comenzar la misión, introduce tu nombre.
+            </p>
+
+            <form onSubmit={handleNameSubmit} className="answer-form">
+              <input
+                value={playerName}
+                onChange={(event) => setPlayerName(event.target.value)}
+                placeholder="Escribe tu nombre..."
+                autoFocus
+              />
+              <button type="submit">Start</button>
+            </form>
+
+            {error && <p className="error">{error}</p>}
+          </section>
+        ) : !accessGranted ? (
           <>
             <div className="top-bar">
               <span className="status-dot" />
@@ -121,7 +154,7 @@ export default function Home() {
 
             <div className="hero-copy">
               <p className="eyebrow">SESSION ASSIGNED TO</p>
-              <h1>{boyfriendName}</h1>
+              <h1>{playerName.toUpperCase()}</h1>
 
               <p>
                 Hay algo pendiente por desbloquear. Para acceder al siguiente
@@ -186,10 +219,11 @@ export default function Home() {
               ya está disponible.
             </p>
 
-            <div className="location-box ">{finalLocation}</div>
+            <div className="location-box">{finalLocation}</div>
 
             <p className="love-note">
-              Ejecución completada. El código ya no es necesario; ahora la misión continúa fuera de esta pantalla.
+              Ejecución completada. El código ya no es necesario; ahora la
+              misión continúa fuera de esta pantalla.
             </p>
 
             <button type="button" onClick={restart}>
