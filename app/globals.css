@@ -1,0 +1,310 @@
+:root {
+  --bg: #050712;
+  --card: rgba(12, 18, 38, 0.82);
+  --card-soft: rgba(255, 255, 255, 0.06);
+  --text: #f6f7fb;
+  --muted: #aab2c5;
+  --line: rgba(255, 255, 255, 0.12);
+  --accent: #7dd3fc;
+  --accent-2: #a78bfa;
+  --danger: #fb7185;
+  --success: #86efac;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.portal-shell {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  overflow: hidden;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(125, 211, 252, 0.22), transparent 32%),
+    radial-gradient(circle at 82% 78%, rgba(167, 139, 250, 0.24), transparent 34%),
+    linear-gradient(135deg, #030511 0%, #081224 52%, #030511 100%);
+}
+
+.grid-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+}
+
+.portal-card {
+  position: relative;
+  width: min(920px, 100%);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--card);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(18px);
+}
+
+.portal-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(125, 211, 252, 0.12), transparent 38%, rgba(167, 139, 250, 0.14));
+}
+
+.top-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--line);
+  padding: 16px 22px;
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--success);
+  box-shadow: 0 0 18px var(--success);
+}
+
+.terminal-id {
+  margin-left: auto;
+}
+
+.hero-copy,
+.challenge-card,
+.success-card,
+.progress-wrapper {
+  position: relative;
+}
+
+.hero-copy {
+  padding: 44px 44px 20px;
+}
+
+.eyebrow,
+.level {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 14px;
+  font-size: clamp(42px, 7vw, 78px);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+}
+
+.hero-copy p:last-child,
+.success-card p {
+  max-width: 660px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.progress-wrapper {
+  padding: 0 44px 28px;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.progress-track {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width 350ms ease;
+}
+
+.challenge-card {
+  margin: 0 44px 44px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--card-soft);
+}
+
+.challenge-card h2 {
+  margin-bottom: 14px;
+  font-size: clamp(26px, 4vw, 42px);
+}
+
+.prompt,
+.hint,
+.error {
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.prompt {
+  color: #dde5f7;
+}
+
+.hint {
+  border-left: 3px solid var(--accent);
+  padding-left: 14px;
+  color: var(--muted);
+}
+
+.error {
+  margin: 14px 0 0;
+  color: var(--danger);
+}
+
+.answer-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+input {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  outline: none;
+  padding: 15px 16px;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text);
+}
+
+input:focus {
+  border-color: rgba(125, 211, 252, 0.8);
+  box-shadow: 0 0 0 4px rgba(125, 211, 252, 0.12);
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 14px;
+  padding: 15px 18px;
+  color: #04101d;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+
+.hint-button {
+  margin-top: 16px;
+  padding: 0;
+  color: var(--muted);
+  background: transparent;
+  font-weight: 700;
+}
+
+.success-card {
+  display: grid;
+  min-height: 650px;
+  align-content: center;
+  padding: 54px;
+}
+
+.success-card h1 {
+  max-width: 760px;
+  background: linear-gradient(135deg, #fff, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.location-box {
+  width: fit-content;
+  max-width: 100%;
+  margin: 18px 0 24px;
+  border: 1px solid rgba(236, 72, 153, 0.9);
+  border-radius: 18px;
+  padding: 18px 20px;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.28), rgba(244, 114, 182, 0.16));
+  color: #fff4fb;
+  font-size: 20px;
+  font-weight: 800;
+  box-shadow: 0 0 24px rgba(236, 72, 153, 0.35);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.love-note {
+  margin-bottom: 28px;
+}
+
+@media (max-width: 700px) {
+  .portal-shell {
+    padding: 12px;
+  }
+
+  .top-bar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .terminal-id {
+    margin-left: 0;
+  }
+
+  .hero-copy,
+  .progress-wrapper {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .challenge-card {
+    margin: 0 22px 24px;
+    padding: 20px;
+  }
+
+  .answer-form {
+    grid-template-columns: 1fr;
+  }
+
+  .success-card {
+    min-height: 620px;
+    padding: 28px;
+  }
+}
